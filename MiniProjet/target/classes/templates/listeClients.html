@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="navbar">
+<link rel="stylesheet" type="text/css" href="webjars/bootstrap/4.0.0/css/bootstrap.min.css" />
+<head>
+<meta charset="utf-8">
+<title>Liste des clients</title>
+</head>
+<body>
+    <div layout:fragment="Mynavbar">
+    <div class="container mt-5">
+    <div class="card">
+     <div class="card-header">
+     Liste clients
+     </div>
+     <div class="card-body"> 
+     <table class="table table-striped" style="text-align: center;">
+     <tr>
+     <th>ID</th>
+     <th>Nom client</th>
+     <th>telephone</th>
+     <th>Id Commande</th>
+     <th>Actions</th>
+     </tr> 
+     <tr th:each="p:${clients.content}">
+     <td th:text="${p.idClient}"></td>
+     <td th:text="${p.nomClient}"></td>
+     <td th:text="${p.telephone}"></td>
+      <td th:text="${p.commande.idCom}"></td>
+     
+     <td><a class="btn btn-danger" onclick="return confirm('Etes-vous sur ?')"
+     th:href="@{supprimerClient(id=${p.idClient}, 
+    page=${currentPage},size=${size})}">Supprimer</a> &nbsp;
+    <a class="btn btn-success" th:href="@{modifierClient(id=${p.idClient})}">Editer</a>
+     </tr> 
+     </table>
+     <ul class="nav nav-pills">
+     <li th:each="page,status:${pages}">
+     <a th:class="${status.index==currentPage?'btn btn-primary':'btn' }"
+     th:href="@{ ListeClient(page=${status.index}, size=${size} ) }"
+     th:text="${status.index }"></a>
+     </li>
+     </ul>
+     
+     </div>
+    </div>
+    </div>
+    </div>
+    </body>
+</html>
